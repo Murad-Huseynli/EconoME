@@ -1,0 +1,77 @@
+version: "3.7"
+
+services:
+  app:
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    env_file:
+      - django.env
+
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: sh -c "
+                    python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
+                    gunicorn --workers=10 --bind 0.0.0.0:8000 econome.wsgi:application"
+    networks:
+      - microservices
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+      - react_data:/app/dist
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+      - flower
+    networks:
+      - microservices
+
+  worker:
+    build:
+      context: .
+      dockerfile: celery.dockerfile
+    command: celery -A econome worker -l info
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    environment:
+      - C_FORCE_ROOT=1
+      - C_FORCE_ROOT="true"
+    privileged: true
+    env_file: django.env
+    restart: on-failure
+    networks:
+      - microservices
+
+  flower:
+    build: ./
+    command: celery -A econome flower --basic_auth=${FlOWER_USER}:${FLOWER_PASSWORD} --address=0.0.0.0 --port=5555 --url-prefix=flower
+    privileged: true
+    env_file: django.env
+    ports:
+      - "5555:5555"
+    depends_on:
+      - worker
+    restart: on-failure
+    networks:
+      - microservices
+
+
+volumes:
+  postgres_data:
+  static_data:
+  media_data:
+  react_data:
+    external: true
+
+networks:
+  microservices:
+    external: true

@@ -1,0 +1,20 @@
+{% extends 'main/template.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block main_section %}
+  <div class="body-auth">
+   <div class="form-section">
+	   {% if '/en' in request.path %}
+         <h2>You successfully logout from your account!</h2>
+         <a href="{% url 'auth-en' %}">Login in personal cabinet again</a>
+	   {% elif '/ru' in request.path %}
+         <h2>Вы успешно вышли со своего аккаунта!</h2>
+         <a href="{% url 'auth-ru' %}">Войдите в свой аккаунт вновь</a>
+	   {% elif '/az' in request.path %}
+	     <h2>Siz uğurlu öz hesabınızdan çıxdız!</h2>
+         <a href="{% url 'auth-az' %}">Öz hesabınıza yenidən daxil olun</a>
+       {% endif %}
+   </div>
+  </div>
+
+{% endblock main_section %}

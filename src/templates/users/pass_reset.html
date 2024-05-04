@@ -1,0 +1,28 @@
+{% extends 'main/template.html' %}
+{% load crispy_forms_tags %}
+{% block main_section %}
+
+  <div class="form-section">
+    {% if '/en' in request.path %}
+        <h2>Password Reset</h2>
+    {% elif '/ru' in request.path %}
+		<h2>Сброс Пароля</h2>
+	{% elif '/az' in request.path %}
+        <h2>Şifrənin sıfırlanması</h2>
+	{% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      {{ form|crispy }}
+      {% if '/en' in request.path %}
+        <button type="submit" class="btn btn-outline-danger">Create new password</button>
+      {% elif '/ru' in request.path %}
+		<button type="submit" class="btn btn-outline-danger">Создать новый пароль</button>
+	  {% elif '/az' in request.path %}
+        <button type="submit" class="btn btn-outline-danger">Yeni şifrəni yarat</button>
+	  {% endif %}
+      
+    </form>
+
+  </div>
+
+{% endblock main_section %}

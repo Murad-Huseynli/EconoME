@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  flower:
+    build: ./
+    command: celery -A econome flower --basic_auth=${FlOWER_USER}:${FLOWER_PASSWORD} --address=0.0.0.0 --port=5555 --url-prefix=flower
+    privileged: true
+    env_file: fSEC.env
+    ports:
+      - "5555:5555"
+    restart: on-failure

@@ -1,0 +1,72 @@
+version: "3.7"
+
+services:
+  app:
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    env_file:
+      - django.env
+
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: sh -c "
+                    python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
+                    gunicorn --workers=3 --bind 0.0.0.0:8000 econome.wsgi:application"
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    command: --requirepass ${REDIS_PASSWORD}
+
+  worker:
+    build:
+      context: .
+      dockerfile: celery.dockerfile
+    command: celery -A econome worker -l info
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    environment:
+      - C_FORCE_ROOT=1
+      - C_FORCE_ROOT="true"
+    privileged: true
+    env_file:
+      - django.env
+    depends_on:
+      - redis
+      - app
+
+  flower:
+    build: ./
+    command: celery -A econome flower --basic_auth=${FlOWER_USER}:${FLOWER_PASSWORD} --address=0.0.0.0 --port=5555 --url-prefix=flower
+    privileged: true
+    env_file:
+      - django.env
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - worker
+      - app
+      - nginx
+    restart: on-failure
+
+
+volumes:
+  static_data:
