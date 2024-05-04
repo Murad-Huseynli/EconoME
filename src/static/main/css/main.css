@@ -1,0 +1,73 @@
+body {
+    background-color: rgb(255, 244, 224);
+}
+
+/* Navbar */
+
+nav .navbar-brand {
+    color: rgb(0, 0, 0);
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 27.5px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+
+nav .nav-item .nav-link {
+    color: rgb(0, 0, 0);
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 27.5px;
+    letter-spacing: 0%;
+    text-align: left;
+
+}
+
+
+/* Main page */
+
+.moto {
+    color: rgb(80, 80, 80);
+    font-family: Mulish;
+    font-size: 90px;
+    font-weight: 800;
+    line-height: 96.78px;
+    letter-spacing: 0%;
+    text-align: left;
+     
+}
+
+.card1 {
+    width: 537.03px;
+    height: 395px;
+    left: 802.24px;
+    right: 82.74px;
+}
+
+
+.description {
+    color: rgb(80, 80, 80);
+    font-family: Inter;
+    font-size: 19.75px;
+    font-weight: 400;
+    line-height: 31.6px;
+    letter-spacing: 0%;
+    text-align: left;
+    text-transform: capitalize;
+    margin-top: 30px;
+}
+
+/* Best deals section */
+
+.title-best-deals {
+    color: rgb(80, 80, 80);
+    font-family: Mulish;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 96.78px;
+    letter-spacing: 0%;
+    text-align: left;
+
+}

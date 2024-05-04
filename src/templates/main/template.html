@@ -1,0 +1,51 @@
+{% load static %}
+{% load i18n %}
+{% load i18n_switcher %}
+{% load support_tags %}
+
+<html lang="en">
+   <head>
+    {% block head %}
+     {% include 'main/head.html' %}
+    {% endblock head %}
+   </head>
+   <body>
+
+
+<section class="{{section_class}}">
+    {% block nav %}
+  {% include 'main/nav.html' %}
+{% endblock nav %}
+
+    {% block jumbotron %}
+
+
+    {% endblock %}
+
+    <div class="container ">
+        <div class="row">
+         {% block main %}
+
+         {% endblock %}
+        </div>
+    </div>
+    
+    {% block footer %}
+      {% include 'main/footer.html' %}
+    {% endblock footer %}
+     
+
+</section>
+
+{% block scripts %}
+  {% include 'main/script.html' %}
+{% endblock scripts %}
+
+{% block special_scripts %}
+
+{% endblock special_scripts %}
+
+<script>
+
+</script>
+</html>

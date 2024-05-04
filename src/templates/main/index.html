@@ -1,0 +1,39 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+
+{% block main %} 
+   <div class="container" style="margin-top: 100px;">
+      <div class="row">
+         <div class="col">
+            <div class="moto">
+               Study More, <br>
+               Spend Less
+            </div>
+            <div class="description">
+             Your Student Pass to Exclusive Deal & <br> Discounts 
+            </div>    
+         </div>
+         <div class="col">
+            <img class="card1" src="{% static 'main/img/card1.png' %}" />
+         </div>
+        
+
+      </div>
+      <div class="row">
+         <h4 class="title-best-deals">Best Deals</h4>
+         <div class="col">
+            <img src="{% static 'main/img/deal1.png' %}" />
+         </div>
+         <div class="col">
+            <img src="{% static 'main/img/deal2.png' %}" />
+         </div>
+         <div class="col">
+            <img src="{% static 'main/img/deal3.png' %}" />
+         </div>
+      </div>
+
+      
+
+   </div>
+{% endblock main %}
