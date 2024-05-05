@@ -1,0 +1,17 @@
+.ebutton {
+    border-radius: 14.81px; 
+    box-shadow: 2.96px 3.95px 44.44px 0px rgba(45, 121, 109, 0.7);
+    background: rgb(255, 111, 97);
+    color: rgb(80, 80, 80);
+    font-family: Mulish;
+    font-size: 21.73px;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: -0.33px;
+    text-align: center;
+    text-decoration: none;
+    padding: 7.8px 13.77px 9.8px 16.77px;
+    position: absolute;
+    margin-top: 18px;
+
+}

@@ -8,12 +8,12 @@ from django.urls import reverse_lazy
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Profile
-from .forms import UserOurRegistration, ProfileImage, ProfileRegistration
+from .forms import UserOurRegistration #, ProfileImage, ProfileRegistration
 from django.shortcuts import get_object_or_404
 import random
 import string
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import  Group
+from .models import User, RegularUser
 from .tasks import send_email
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
@@ -134,39 +134,18 @@ def register(request):
             user.is_active = False
             user.save()
 
-            group = Group.objects.get(name='users')
-            user.groups.add(group)
-
             current_site = get_current_site(request)
             username = form.cleaned_data.get('username')
-            mail_subject = _('The activation link has been sent to your email!')
-
-            next_page = request.POST['next']
-            if len(next_page) == 0:
-              next_page = '/' + request.LANGUAGE_CODE
-
-            message = render_to_string('users/account_activation_email.html', {
-                'user': username,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-                'language': request.LANGUAGE_CODE,
-                'next': next_page
-            })
-            to_email = form.cleaned_data.get('email')
-            send_email.apply_async(args=(mail_subject, message, os.getenv('mail'), to_email), countdown=10)
 
             
-            messages.success(request, 'The activation link for the account ' + username +
-                             'has been sent to your email ' + to_email + ' ! ' +
-                             'During the day check your email several times, please!')
+            messages.success(request, 'Dear user ' + username + ' Thank you for joining our platform! ' + 
+                             'Our administrator will send you mail when your account will be activated!')
             
-
             return redirect('login-view')
     else:
         form = UserOurRegistration()
     return render(request, 'users/registration.html',
-                  {'user_form': form, 'title': 'Registration', 'section_class': 'sign_in_out'})
+                  {'form': form, 'title': 'Registration', 'section_class': 'sign_in_out'})
 
 
 def logoutView(request):

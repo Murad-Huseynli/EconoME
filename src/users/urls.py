@@ -1,12 +1,12 @@
 from django.urls import path, include
 from django.contrib.auth import views as authViews
-from .views import  activate,  NewLoginView, \
+from .views import    NewLoginView, \
     register, logoutView, user_settings, NewPasswordResetView, user_profile
 
 
 urlpatterns = [
 
-    path('activate/<str:uidb64>/<str:token>', activate, name='activate'),
+    #path('activate/<str:uidb64>/<str:token>', activate, name='activate'),
     path('reset', NewPasswordResetView.as_view(),
          name='pass-reset'),
     path('password_reset_confirm/<uidb64>/<token>',
