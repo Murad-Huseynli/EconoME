@@ -24,7 +24,9 @@ from django.utils.translation import gettext_lazy as _
 urlpatterns = [
   path("host/econome-control/", admin.site.urls),
   path('', include('main.urls')),
-  path('users/', include('users.urls'))
+  path('users/', include('users.urls')),
+  path('', include('deals.urls')),
+  path("api/", include("api.urls"))
                               
 ]
 

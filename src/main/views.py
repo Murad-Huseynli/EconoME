@@ -14,10 +14,17 @@ def main(request):
     }
     return render(request, template_name, data)
 
-
-def in_development(request):
+def about_us(request):
+    template_name = "main/about_us.html"
     data = {
 
     }
+    return render(request, template_name, data)
+
+
+def in_development(request):
     template_name = "main/in_development.html"
+    data = {
+
+    }
     return render(request, template_name, data)

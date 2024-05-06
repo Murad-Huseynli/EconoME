@@ -1,0 +1,40 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+{% block styles %}
+  <link href="{% static 'main/css/about_us.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %} 
+   <div class="container" style="margin-top: 100px;">
+      <div class="row">
+         <div class="col">
+            <div class="moto">
+               We are <br>
+               EconoMe!
+            </div>
+            <div class="description">
+             A Platform Connecting Businesses <br> With Diverse Consuments Via Tailored Discounts  
+            </div>
+         </div>
+         <div class="col">
+            <img class="card1" src="{% static 'main/img/card1.png' %}" />
+         </div>
+      </div>
+
+      <div class="row">
+        <h2 class="title-best-deals">Mission</h2>
+        <ul class="indented-list">
+            <li>Enhance the shopping experience</li>
+            <li>Offer exclusive savings opportunities</li>
+            <li>Provide value in every transaction</li>
+          </ul>
+          
+      
+      </div>
+ 
+
+      
+
+   </div>
+{% endblock main %}

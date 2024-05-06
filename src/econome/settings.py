@@ -50,11 +50,17 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'crispy_forms',
     'users.apps.UsersConfig',
+    'deals.apps.DealsConfig',
     "corsheaders",
     'captcha',
     'drf_recaptcha',
     'drf_yasg',
-    'storages'
+    'storages',
+    'rest_framework_simplejwt',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'api.apps.ApiConfig',
+
 
 ]
 
@@ -97,6 +103,13 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
 WSGI_APPLICATION = 'econome.wsgi.application'
 
+SESSION_COOKIE_AGE = timedelta(weeks=2).total_seconds()
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 SESSION_COOKIE_AGE = timedelta(weeks=2).total_seconds()
 

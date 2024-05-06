@@ -1,0 +1,226 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+{% block styles %}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="{% static 'deals/css/main.css' %}">
+
+{% endblock styles %}
+
+{% block main %} 
+<div class="search-container">
+    <input id="search" type="text" class="form-control search-input" placeholder="Search...">
+    <i class="fa fa-search search-icon"></i>
+    <div class="search-dropdown">
+    </div>
+</div>
+
+   <div class="container" id="container" style="margin-top: 6%;">
+   </div>
+
+   <ul class="pagination d-flex justify-content-center" id="pagination">
+
+   </ul>
+   
+{% endblock main %}
+
+
+{% block special_scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+  <script>
+        // The basic url for fetching API
+        const API = '{{API_DEALS}}'
+
+        // -------- Support functions -------------
+
+        // The basic fetching function by URL
+        function fetchData(url) {
+            console.log(url);
+            return $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                error: function(request, textStatus, errorThrown) {
+                    console.error('Request failed: ' + textStatus + ', Response code: ' + request.status);
+                }
+            }).then(function (data){
+                return data;
+            });
+
+        }
+
+        // The function which gets all products
+        function getProducts(link){
+            return fetchData(link).then( function(data){
+                return {
+                    'products': data.products,
+                    'total': data.total
+                };
+
+            })
+        }
+
+
+
+        // Support function in order to get ID of the HTML object
+        function getHTMLId(element) {
+            var res = '';
+            for(var i = 4; i < element.length; i++){
+                res += element[i];
+            }
+            return res
+        }
+
+        // --------------- Component functions --------------------
+
+        // Component function which renders pagination buttons
+        var pageActive = 1;
+        function renderPagination(objCounts, link) {
+
+            getProducts(link).then(function (data){
+                $("#pagination").empty();
+                const total = data.total;
+                var pages = Math.floor(total / objCounts) + (total % objCounts ? 1 : 0);
+     
+                for (let i = 1; i <= pages; i++) {
+                    var cName = 'page' + i;
+                    if (i === pageActive) {
+                        cName += ' active';
+                    }
+                    $('<li>', {
+                        'class': cName,
+                        'id': 'page' + i
+                    }).appendTo('#pagination');
+
+                    $('<a>', {
+                        'class': 'page-link',
+                    }).text(i).on('click', function () {
+                        pagination(i, objCounts, link + '?')
+                    }).appendTo('#page' + i);
+                }
+            });
+        }
+
+        // Component function which renders the all products according pagination configuration
+        function pagination(page, objectCount, link){
+            $("#container").empty();
+            var pageId = 'page' + page;
+            var pageIdActive = 'page' + pageActive;
+
+            //If other page button clicked, the current button must lose the active class
+            $('#' + pageIdActive).removeClass('active');
+            //If other page button clicked, the clicked page button must gain the active class
+            $('#' + pageId).addClass('active');
+   
+            pageActive = page;
+            // Getting products by using pagination configurations
+            const paginationAPI = link + 'page_size=' + objectCount + '&page=' + page
+            getProducts(paginationAPI).then(function (data){
+                var dataEl = data.products;
+                var deals = [];
+                for(let i = 0; i < dataEl.length; i++)
+                {
+                    deals.push(dataEl[i]);
+                }
+
+                // Rendering product to HTML
+                let cnt = 0;
+                let rowCnt = 0;
+                for (var i = 0; i < deals.length; i+=3) {
+                        rowCnt += 1
+                        $('<div>', {
+                            'class': 'row',
+                            'id': 'row' + rowCnt
+                        }).appendTo('#container');
+                        for(var j = i; j < Math.min(i + 3, deals.length); j++) {
+                            console.log(deals[j]);
+                            var item = deals[j];
+                            $('<div>', {
+                                'class': 'card col',
+                                'id': 'card' + item.id,
+                                'style': 'width: 18rem; margin-right: 20px; justify-content: center; align-items: center;'
+                            }).appendTo('#row' + rowCnt);
+                
+                            $('<img>', {
+                                'class': 'card-img-top img-fluid',
+                                'src': item.preview,
+                                'alt': item.title,
+                                'style': 'width: auto; object-fit: cover;'
+                            }).appendTo('#card' + item.id);
+
+                            $('<div>', {
+                                'class': 'card-body',
+                                'id': 'card-body' + item.id
+                            }).appendTo('#card' + item.id);
+
+                            $('<h5>', {
+                                'text': item.title,
+                                'class': 'card-title'
+                            }).appendTo('#card-body' + item.id);
+
+                            $('<p>', {
+                                'text': item.description,
+                                'class': 'card-text'
+                            }).appendTo('#card-body' + item.id);
+
+                            $('<h6>', {
+                                'class': 'card-text',
+                                'text': 'Condition: ' + item.termsConditions
+                            }).appendTo('#card-body' + item.id);
+
+                            $('<ul>', {
+                                'class': 'list-group list-group-flush',
+                                'id': 'period' + item.id
+                            }).appendTo('#card-body' + item.id);
+
+                            $('<li>', {
+                                'class': 'list-group-item',
+                                'text': 'Start Date:' + item.startDate
+                            }).appendTo('#period' + item.id)
+
+                            $('<li>', {
+                                'class': 'list-group-item',
+                                'text': 'End Date:' + item.endDate
+                            }).appendTo('#period' + item.id)
+
+                            cnt = cnt + 1;
+                        }
+
+                    }
+               
+            });
+
+        }
+
+        // Component function which renders the whole page
+        function generatePage(link, sig){
+            renderPagination(12, link);
+            pagination(1, 12, link + ( sig ? "?" : '&'));
+
+        }
+
+        // Render the page when all files loaded
+        $(document).ready(function(){
+            generatePage(API, 1);
+        });
+
+        //------- Binding events -------
+
+        // Binding the search event
+        $( "#search" ).on( "change", function(e) {
+            var keyword = e.target.value;
+            generatePage(API + '?search=' + keyword, 0);
+            
+        });
+     
+       // Toggle search dropdown on search icon click
+    document.querySelector('.search-icon').addEventListener('click', function() {
+        var keyword = document.querySelector('.search-input').value;
+        generatePage(API + '?search=' + keyword, 0);
+       
+    });
+ 
+  </script>
+{% endblock %}

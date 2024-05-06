@@ -1,0 +1,36 @@
+.indented-list {
+    list-style-type: none;
+    padding: 0;
+  }
+   
+  .indented-list li:before {
+    background-color: rgb(167, 134, 108);
+    display: inline-block;
+    margin-left: -1em;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    content: '';
+    margin-right: 10px;
+
+  }
+
+  .indented-list li {
+    padding-left: 20px; 
+    color: rgb(80, 80, 80);
+    font-family: Inter;
+    font-size: 19.75px;
+    font-weight: 400;
+    line-height: 31.6px;
+    letter-spacing: 0%;
+    text-align: left;
+    text-transform: capitalize;
+  }
+  
+  .indented-list li:nth-child(2) {
+    padding-left: 15%; 
+  }
+  
+  .indented-list li:nth-child(3) {
+    padding-left: 30%; 
+  }
