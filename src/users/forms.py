@@ -26,7 +26,7 @@ class UserOurRegistration(UserCreationForm):
     #captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(), label="Captcha")
 
     class Meta:
-        model = User
+        model = RegularUser
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'mobile_number', 'birthday_date', 'sex']
         widgets = {
             'birthday_date': forms.DateInput(

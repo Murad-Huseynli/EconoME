@@ -1,0 +1,33 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+
+{% block main %} 
+   <div class="container" style="margin-top: 100px;">
+      <div class="row">
+         {% if user_document %}
+           <p>
+                Thank you for your submission, {{ user_name }}. <br>
+                Please wait for the confirmation email while our administrators checking your submission! <br>
+            </p>
+         {% else %}   
+            <p>
+                Dear {{ user_name }}, <br>
+                you must submit your profile image and the document from your university, which confirms your student status! <br>
+            </p>    
+            <form method="post" enctype="multipart/form-data" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="document" class="form-label">Document:</label>
+                    <input type="file" class="form-control" id="document" name="document" required>
+                </div>
+                <div class="mb-3">
+                    <label for="profile_image" class="form-label">Profile Image:</label>
+                    <input type="file" class="form-control" id="profile_image" name="profile_image" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>   
+            </form>
+            
+         {% endif %}  
+       </div>
+{% endblock main %}

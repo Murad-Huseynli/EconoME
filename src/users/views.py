@@ -51,16 +51,12 @@ class NewLoginView(LoginView):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
 
-        # Use Django's built-in login function to authenticate the user
         user = form.get_user()
         login(self.request, user)
 
         # Redirect the user to a specific page after successful login
-        next_page = self.request.POST['next']
-        if len(next_page) == 0:
-            next_page = '/' + self.request.LANGUAGE_CODE
-       
-
+        next_page = '/'
+    
         messages.success(self.request, 'You have successfully logged in. Lets get started!')
         response = HttpResponseRedirect(next_page)
 
@@ -131,10 +127,9 @@ def register(request):
 
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.setGroup('student')
             user.save()
 
-            current_site = get_current_site(request)
             username = form.cleaned_data.get('username')
 
             

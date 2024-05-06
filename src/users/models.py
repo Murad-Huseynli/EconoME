@@ -13,8 +13,8 @@ class QRCode(models.Model):
         return self.expirationDate
     
     def setCode(self, username):
-        qrcode = qrcode.make(username)
-        self.code = qrcode
+        codeQR = qrcode.make(username).read()
+        self.code.save('qrcode' + username, codeQR)
         self.save()
     
     def setExpirationDate(self, expirationDate):
@@ -87,20 +87,49 @@ class User(AbstractUser):
     def setEmail(self, email):
         self.email = email
         self.save()
+    
+    def setMobileNumber(self, mobileNumber):
+        self.mobileNumber = mobileNumber
+        self.save()
+    
+    
 
 User._meta.get_field('groups').related_name = 'user_groups'
 User._meta.get_field('user_permissions').related_name = 'user_permissions_list'
     
 class RegularUser(User):
+    img = models.ImageField(upload_to='profile/', null=True)
     group = models.CharField(max_length=50, default='')
+    approval_document = models.FileField(upload_to='approval_documents/', null=True)
     qrCode = models.ForeignKey(QRCode, null=True, on_delete=models.PROTECT)
-
+    is_approved = models.BooleanField(default=False)
+    
+    def getApprovalDocument(self):
+        return self.approval_document
+    
     def setGroup(self, group):
         self.group = group
         self.save()
     
     def setQrCode(self, qrCode):
         self.qrCode = qrCode
+        self.save()
+    
+    def addQrCode(self):
+        qrcode = QRCode.objects.create()
+        qrcode.setCode(self.username)
+
+    def setImg(self, img):
+        self.img = img
+        self.save()
+
+    def setApprovalDocument(self, approval_document):
+        self.approval_document = approval_document
+        self.save()
+    
+    def setApprove(self):
+        self.is_approved = True
+        self.addQrCode()
         self.save()
 
 

@@ -26,7 +26,8 @@ urlpatterns = [
   path('', include('main.urls')),
   path('users/', include('users.urls')),
   path('', include('deals.urls')),
-  path("api/", include("api.urls"))
+  path("api/", include("api.urls")),
+  path('admin/', include('adminPanel.urls'))
                               
 ]
 
