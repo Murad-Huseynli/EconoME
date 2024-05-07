@@ -1,0 +1,32 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+
+{% block main %} 
+   <div class="container" style="margin-top: 100px;">
+      <div class="row">
+         <div class="col">
+          
+            <h2>Welcome, dear {{user.username}}!</h2>
+      
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{user.get_full_name}}</h5>
+                    <p class="card-text">Email: {{user.getEmail}}</p>
+                    <p class="card-text">Country: {{user.getCountry}}</p>
+                    <p class="card-text">City: {{user.getCity}}</p>
+                    <p class="card-text">University: {{user.getUniversity}}</p>
+
+                    <img src="{{user.getImg.url}}" alt="Profile Image" class="profile-image">
+                    <img src="{{user.getQrCode.getCode}}" alt="QR Code" class="qr-code">
+                    <p class="card-text">QR Code Expiration Date: {{user.getQrCode.getExpirationDate}}</p>
+
+                </div>
+                </div>
+            </div>
+      </div>
+
+      
+
+   </div>
+{% endblock main %}

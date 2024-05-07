@@ -62,10 +62,10 @@ class Deal(models.Model):
         return self.discountRateByGroup[group]
     
     def getStartDate(self):
-        return self.getStartDate
+        return self.startDate.strftime("%Y-%m-%d")
     
     def getEndDate(self):
-        return self.getEndDate
+        return self.endDate.strftime("%Y-%m-%d")
     
     def getIsActive(self):
         return self.getIsActive

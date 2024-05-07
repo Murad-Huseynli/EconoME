@@ -1,0 +1,46 @@
+{% extends 'main/template.html' %}
+{% load static %}
+
+{% block styles %}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="{% static 'deals/css/main.css' %}">
+
+{% endblock styles %}
+
+{% block main %} 
+
+
+   <div class="container" id="container" style="margin-top: 6%;">
+    <div class="card">
+      <img src="{{deal.preview.url}}" class="card-img-top img-fluid" style="width:18em;" alt="Card Image">
+        <div class="card-body">
+            <h5 class="card-title">{{deal.getTitle}}</h5>
+            <p class="card-text">{{deal.getDescription}}</p>
+            <p class="card-text">Terms Conditions:</p>
+            <p class="card-text">Start Date:{{deal.getStartDate}}</p>
+            <p class="card-text">End Date:{{deal.getEndDate}}</p>
+            <p class="card-text">Discount Rate:{{deal.discountRateByGroup.student}}</p>
+            <p class="card-text">Offered By: {{deal.getOfferedBy}}</p>
+        </div>
+    </div>
+   </div>
+    
+   <h2>Scan your QrCode</h2>
+   <form method="post" enctype="multipart/form-data" class="mt-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="document" class="form-label">QrCode:</label>
+        <input type="file" class="form-control" id="document" name="document" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>   
+</form>
+
+
+{% endblock main %}
+
+
+{% block special_scripts %}
+ 
+  </script>
+{% endblock %}

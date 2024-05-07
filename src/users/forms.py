@@ -18,16 +18,18 @@ class UserOurRegistration(UserCreationForm):
     username = forms.CharField(required=True, label=_("Username"))
     password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Confirm password"))
-    mobile_number = forms.CharField(label='Mobile number', required=True)
+    mobileNumber = forms.CharField(label='Mobile number', required=True)
     birthday_date = forms.DateField(label='Birthday', widget=DatePickerInput)
     country = forms.CharField(label='Country', required=True)
     city = forms.CharField(label='City', required=True)
     sex = forms.ChoiceField(choices=SEXES, required=True, label='Sex')
+    university = forms.CharField(label='University', required=True)
+
     #captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(), label="Captcha")
 
     class Meta:
         model = RegularUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'mobile_number', 'birthday_date', 'sex']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'mobileNumber', 'sex', 'birthday_date', 'country', 'city', 'university' ]
         widgets = {
             'birthday_date': forms.DateInput(
                 format=('%Y-%m-%d'),

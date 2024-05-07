@@ -23,7 +23,9 @@ def main(request):
         data['user_name'] = request.user.get_full_name()
         data['user_document'] = request.user.approval_document
     elif request.user.is_authenticated and request.user.is_approved is True:
-        template_name = "main/index.html"
+        template_name = "main/profile.html"
+        user = request.user
+        data['user'] = user
     elif request.user.is_anonymous:
         template_name = "main/index.html"
 
@@ -39,6 +41,14 @@ def about_us(request):
 
 def in_development(request):
     template_name = "main/in_development.html"
+    data = {
+
+    }
+    return render(request, template_name, data)
+
+
+def pricing(request):
+    template_name = "main/pricing.html"
     data = {
 
     }

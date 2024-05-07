@@ -6,7 +6,7 @@ def requestsView(request):
     if request.user.is_anonymous or request.user.group != 'admin':
         return redirect('login-view')
     
-    users = RegularUser.objects.filter(is_approved=False)
+    users = RegularUser.objects.filter(is_approved=False, group='student')
     template_name = 'adminPanel/requests.html'
 
     return render(request, template_name, {'users': users})
