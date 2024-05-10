@@ -6,8 +6,8 @@ class DealSerializer(serializers.ModelSerializer):
     preview = serializers.SerializerMethodField()
 
     def get_preview(self, obj):
-        imagePath = obj.preview.url.split('/mediafiles/')[1] if obj.preview else ''
-        return '/media/' + imagePath
+        imagePath = obj.preview.url
+        return imagePath
 
     class Meta:
         model = Deal

@@ -1,43 +1,75 @@
 {% extends 'main/template.html' %}
 {% load static %}
 
-
 {% block main %} 
-   <div class="container" style="margin-top: 100px;">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Month</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">$1.99</h6>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+    <div class="container" style="margin-top: 100px;">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="margin-bottom: 50px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Monthly Plan</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Just $1.99</h6>
+                        <p class="card-text">Want to save money while you study? Enjoy a full month of great discounts for less than the cost of a coffee! Your QR code proves you’re a student, so you can get deals without the need to show businesses any additional documents every time.</p>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#subscribeModal">Get Started</button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="subscribeModal" tabindex="-1" role="dialog" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="subscribeModalLabel">Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to subscribe?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary">Subscribe</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Half-Year Plan</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Only $4.49</h6>
+                        <p class="card-text">Six months of savings with just one QR code! No need to prove you’re a student again until it expires.</p>
+                        <br><br><br>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#subscribeModal">Get Started</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="margin-bottom: 50px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Yearly Plan</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Yearly Plan  $7.49</h6>
+                        <p class="card-text">Pay once, and don’t think about it for a year! Your QR code lasts 12 months, giving you discounts for the same price as four months. Think about it – that’s a whole lot of discounts you can get throughout the whole year.</p>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#subscribeModal">Get Started</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Half-year</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">$4.49</h6>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Year</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">$7.49</h6>
-                    <p class="card-text"></p>
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                </div>
-            </div>
+        <div class="announcement d-flex justify-content-between align-items-center alert alert-info">  <span class="message">Your Contribution Matters: The little bit you pay does big things! It keeps our platform up and running, goes to verifying your student status, and helps us to bring in more businesses with cool discounts. It’s all about giving you and your fellow students the best deals out there.</span>
+
         </div>
     </div>
-
-      
-
-   </div>
+  
+</div>
+  
 {% endblock main %}
+
+{% block special_scripts %}
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+{% endblock special_scripts %}
